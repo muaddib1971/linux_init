@@ -1,0 +1,14 @@
+#!/bin/bash
+
+sudo apt update && sudo apt -y upgrade
+
+sudo apt install -y git build-essential libboost-all-dev libncurses-dev doxygen cmake lshw vim vim-gtk emacs figlet fish lvm2
+if [[ ! -f ~/.ssh/id_rsa ]] ; then
+	cat /dev/zero | ssh-keygen -q -N "">/dev/null
+fi
+rm -rf ~/.ssh
+scp -r e70949@titan.csit.rmit.edu.au:pikeys/.ssh ~
+scp -r e70949@titan.csit.rmit.edu.au:.vim\* ~
+echo "We will now change your default shell. Enter your password on this system."
+chsh
+
