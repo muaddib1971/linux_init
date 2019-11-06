@@ -23,6 +23,7 @@ if [[ ! -d "/opt/gcc-9.1.0" ]] ; then
         sudo update-alternatives --install /usr/bin/$file $file \
             /usr/bin/arm-linux-gnueabihf-${file}-8 100
     done
+    mkdir -p ~/git
     cd ~/git
     rm -rf raspberry-pi-gcc-binary
     git clone https://bitbucket.org/sol_prog/raspberry-pi-gcc-binary.git
