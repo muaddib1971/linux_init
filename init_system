@@ -1,5 +1,6 @@
 #!/bin/bash
-
+#crash if anything fails
+set -e
 sudo apt update && sudo apt -y upgrade
 
 sudo apt install -y git build-essential libboost-all-dev libncurses-dev \
