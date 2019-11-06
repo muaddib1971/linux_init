@@ -1,6 +1,4 @@
 #!/bin/bash
-#crash if anything fails
-set -e
 sudo apt update && sudo apt -y upgrade
 
 sudo apt install -y git build-essential libboost-all-dev libncurses-dev \
@@ -13,32 +11,5 @@ scp -r e70949@titan.csit.rmit.edu.au:pikeys/.ssh ~
 scp -r e70949@titan.csit.rmit.edu.au:.vim\* ~
 echo "We will now change your default shell. Enter your password on this system."
 chsh
-if [[ ! -d "/opt/gcc-9.1.0" ]] ; then
-    for file in gcc gcc-ar gcc-nm gcc-ranlib ; do
-        sudo update-alternatives --remove  $file \
-            /usr/bin/arm-linux-gnueabihf-${file}-8 
-        sudo ln -sf /usr/bin/arm-linux-gnueabihf-${file}-8 /usr/bin/$file
-    done
-
-    for file in gcc gcc-ar gcc-nm gcc-ranlib ; do
-        sudo update-alternatives --install /usr/bin/$file $file \
-            /usr/bin/arm-linux-gnueabihf-${file}-8 100
-    done
-    mkdir -p ~/git
-    cd ~/git
-    rm -rf raspberry-pi-gcc-binary
-    git clone https://bitbucket.org/sol_prog/raspberry-pi-gcc-binary.git
-    cd raspberry-pi-gcc-binary
-    tar -xjvf gcc-9.1.0-armhf-raspbian.tar.bz2
-    sudo mv gcc-9.1.0 /opt
-    for file in gcc gcc-ar gcc-nm gcc-ranlib ; do
-        sudo update-alternatives --install /usr/bin/$file $file \
-            /opt/gcc-9.1.0/bin/arm-linux-gnueabihf-${file}-9.1 20
-    done
-    echo 'export LD_LIBRARY_PATH=/opt/gcc-9.1.0/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
-    . ~/.bashrc
-    for file in sys bits gnu asm crti.o crt1.o crtn.o ; do
-        sudo ln -sf /usr/include/arm-linux-gnueabihf/$file /usr/lib/$file
-    done
-fi
+exec fish
 
